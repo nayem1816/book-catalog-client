@@ -1,11 +1,25 @@
 import { Link } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-/* eslint-disable @typescript-eslint/no-misused-promises */
+export type SignUpInputsType = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 const Signup = () => {
+  const { register, handleSubmit } = useForm<SignUpInputsType>();
+
+  const onSubmit: SubmitHandler<SignUpInputsType> = (
+    data: SignUpInputsType
+  ) => {
+    console.log(data);
+  };
+
   return (
     <div className="flex justify-center items-center p-2 mt-24">
       <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">
             Sign up to our nym-book
           </h5>
@@ -18,6 +32,7 @@ const Signup = () => {
             <input
               type="text"
               id="name"
+              {...register("name")}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="John Doe"
             />
@@ -31,6 +46,7 @@ const Signup = () => {
             <input
               type="email"
               id="email"
+              {...register("email", { required: true })}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="name@company.com"
               required
@@ -46,6 +62,7 @@ const Signup = () => {
             <input
               type="password"
               id="password"
+              {...register("password", { required: true })}
               placeholder="••••••••"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               required
